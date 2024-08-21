@@ -8,18 +8,36 @@
 <body id="app">
     <h2>Search App</h2>
     <div id="searchResult"></div>
-    <form class="container" action="/submit" method="post">
+    <form class="container" id="searchForm">
         <label for="search">Search Entry</label><br>
-        <input type="text" id="search" name="search"><br>
-        <input type="submit" id="submit" value="Submit" onclick="returnSearch()">
+        <input type="text" id="search" name="searchText"><br>
+        <input type="submit" id="submit" value="Submit">
     </form>
 </body>
 <script>
-    function returnSearch () {
-        var _para = document.getElementById("searchResult");
-        _para.innerHTML="text rendered from Server"
-        _para.styles.color="red"
-    }
-    
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevents the default form submission
+
+        const searchText = document.getElementById("search").value.trim();
+        const _para = document.getElementById("searchResult");
+        
+        // Sending a POST request to the server using fetch API
+        fetch("/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({searchText: searchText})
+        })
+        .then(response => response.text()) // Assuming the server sends back text data
+        .then(data => {
+            _para.innerHTML = `Search Result: ${data}`;
+            _para.style.color = "red"; // Corrected from "styles.color"
+        })
+        .catch(error => {
+            _para.innerHTML = "An error occurred while fetching the data.";
+            _para.style.color = "red";
+        });
+    });
 </script>
 </html>
