@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Application</title>
+</head>
+<body id="app">
+    <h2>Search App</h2>
+    <div id="searchResult"></div>
+    <form class="container" action="/submit" method="post">
+        <label for="search">Search Entry</label><br>
+        <input type="text" id="search" name="search"><br>
+        <input type="submit" id="submit" value="Submit" onclick="returnSearch()">
+    </form>
+</body>
+<script>
+    function returnSearch () {
+        var _para = document.getElementById("searchResult");
+        _para.innerHTML="text rendered from Server"
+        _para.styles.color="red"
+    }
+    
+</script>
+</html>
