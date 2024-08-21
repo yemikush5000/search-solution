@@ -28,15 +28,24 @@ app.post("/submit", (req, res) => {
 
         let searchResult = [];
 
-        for (let i = 0; i < searchData.length; i++) { // Start at index 0
-            if (fname === searchData[i].first_name) {
-                searchResult.push(searchData[i]); // Add the object to the array
-            } else if (fname.slice(0, 3) === searchData[i].first_name.slice(0, 3)) {
-                searchResult.push(searchData[i]); // Add the object to the array
-            } else if ((fname == searchData[i].first_name) && (lname == searchData[i].last_name)) {
-                searchResult.push(searchData[i]); // Add the object to the array
+        for (let i = 0; i < searchData.length; i++) {
+            // Check if both first name and last name match exactly
+            if (fname == searchData[i].first_name && lname == searchData[i].last_name) {
+                searchResult.push(searchData[i]); // Add the exact matching object to the array
+            }
+            // If only the first name matches exactly
+            else if (fname === searchData[i].first_name) {
+                searchResult.push(searchData[i]);
+            }
+            // If the first three characters of the first name match
+            else if (fname.slice(0, 3) === searchData[i].first_name.slice(0, 3)) {
+                searchResult.push(searchData[i]);
+            }
+            else if (searchText.length == 0) {
+                return "please enter a search text";
             }
         }
+        
 
         if (searchResult.length === 0) {
             console.log("No matches found.");
