@@ -18,20 +18,33 @@ app.post("/submit", (req, res) => {
     let searchText = req.body.searchText.trim();
 
     function sequentialSearch(searchData, searchText) {
-        let pos = 0;
-        let found = false;
-        let foundName = [];
-
-        while (pos < searchData.length && !found) {
-            let firstSearch = searchData[pos].first_name;
-            if (searchText === firstSearch) {
-                foundName.push(firstSearch);
-                found = true;
-            } else {
-                pos += 1;
+        const parts = searchText.split(' ');
+        // Assign the parts to variables
+        const fname = parts[0];
+        const lname = parts[1];
+        // Output the results
+        console.log('First Name:', fname);
+        console.log('Last Name:', lname);
+        var searchResult = [];
+        var first_name = "first_name";
+        var last_name = "last_name";
+        for (let i = 0; i < searchData.length; i++) {
+            console.log(i);
+            if (fname === searchData[i].first_name) {
+                //searchResult = searchResult + searchData[i]
+                searchResult.push(searchData[i]);
+            }
+            else if (fname.slice(0,3) === searchData[i].first_name.slice(0,3)) {
+                searchResult = searchResult + searchData[i]
+            }
+            else if ((fname === searchData[i].first_name) && (lname === searchData[i].last_name)) {
+                searchResult = searchResult + searchData[i]
+            }
+            else {
+                console.log("Please enter your search text")
             }
         }
-        return foundName;
+    return searchResult;
     }
 
     let foundName = sequentialSearch(searchData, searchText);
