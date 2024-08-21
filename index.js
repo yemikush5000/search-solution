@@ -33,7 +33,7 @@ app.post("/submit", (req, res) => {
                 searchResult.push(searchData[i]); // Add the object to the array
             } else if (fname.slice(0, 3) === searchData[i].first_name.slice(0, 3)) {
                 searchResult.push(searchData[i]); // Add the object to the array
-            } else if ((fname === searchData[i].first_name) && (lname === searchData[i].last_name)) {
+            } else if ((fname == searchData[i].first_name) && (lname == searchData[i].last_name)) {
                 searchResult.push(searchData[i]); // Add the object to the array
             }
         }
